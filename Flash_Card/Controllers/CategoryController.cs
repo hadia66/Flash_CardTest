@@ -1,12 +1,15 @@
 ﻿using Flash_Card.Entity;
 using Flash_Card.Model;
 using Flash_Card.Service;
+using Google.Api;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using System.Net;
+using System.Text;
+using Google.Cloud.Translation.V2;
 
 namespace Flash_Card.Controllers
 {
@@ -34,38 +37,64 @@ namespace Flash_Card.Controllers
         //}
         private readonly ICategoryService _Categoryservice;
         private readonly IStringLocalizer<CategoryController> _localization;
+        private readonly ITranslationService _Translate;
 
-
-        public CategoryController(ICategoryService categoryservice, IStringLocalizer<CategoryController> localization)
+        public CategoryController(ICategoryService categoryservice, 
+            IStringLocalizer<CategoryController> localization,
+            ITranslationService translate)
         {
             _Categoryservice = categoryservice;
             _localization = localization;
-
+            _Translate = translate;
         }
 
+        [HttpGet()]
+        public async Task<IActionResult> GetAll()
+        {
+            var Result = await _Categoryservice.GetAllAsync();
+            return Ok(Result);
+        }
+       
+        [HttpGet()]
+        public async Task<IActionResult> GetData([FromHeader]string targetLanguageCode)
+        {
+            var data = await _Categoryservice.GetAllAsync();
+            
+        
+
+            foreach (var item in data)
+            {
+                item.CategoryDescription = await _Translate.Translate(item.CategoryDescription, targetLanguageCode);
+            }
+
+            return Ok(data);
+        }
         //[HttpGet()]
-        //public async Task<IActionResult> GetAll()
+        //public async Task<IActionResult> GetAll(string ln)
         //{
+
         //    var Result = await _Categoryservice.GetAllAsync();
-        //    return Ok(Result);
+        //    var Response = _Translate.Translate(Result[0].CategoryName,ln);
+        //    return Ok(Response);
         //}
-        //client.DefaultRequestHeaders.AcceptLanguage.TryParseAdd("fr-FR");
+
+
         [HttpGet()]
         public async Task<IActionResult> GetAllProducts()
         {
             var Result = await _Categoryservice.GetAllCProducts();
-  
+
             return Ok(Result);
         }
 
 
-        [HttpGet("{id}")]
-        public IActionResult Get([FromRoute] int id)
-        {
-            var Result = _Categoryservice.GetById(id);
-           
-            return Ok(Result);
-        }
+        //[HttpGet("{id}")]
+        //public IActionResult Get([FromRoute] int id)
+        //{
+        //    var Result = _Categoryservice.GetById(id);
+
+        //    return Ok(Result);
+        //}
 
         [HttpPost]
         //[AllowAnonymous]

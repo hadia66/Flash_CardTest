@@ -1,9 +1,11 @@
 
+//using AgileObjects.ReadableExpressions;
+using AgileObjects.ReadableExpressions;
 using Flash_Card;
 using Flash_Card.Repository;
 using Flash_Card.Repository.IRepository;
 using Flash_Card.Service;
-
+using Google.Cloud.Translation.V2;
 using Microsoft.AspNetCore.Localization;
 
 using Microsoft.EntityFrameworkCore;
@@ -29,6 +31,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
+//builder.Services.AddScoped<ITranslationService, TranslationService>();
+
 builder.Services.AddScoped<IProductservice, ProductService>();
 builder.Services.AddSwaggerGen(options =>
 {
@@ -58,13 +62,24 @@ builder.Services.AddSwaggerGen(options =>
 builder.Services.AddLocalization();
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSingleton<IStringLocalizerFactory, JsonStringLocalizerFactory>();
+//builder.Services.AddSingleton<TranslationClient>(x =>
+//    TranslationClient.Create(
+//        new TranslationSettings { ApiKey = "AIzaSyC69tYuAo11VZ44WcgUE2yefAZ5r3jmZNU" }));
+//builder.Services.AddMvc()
+//    .AddDataAnnotationsLocalization(options =>
+//    {
+//        options.DataAnnotationLocalizerProvider = (type, factory) =>
+//            factory.Create(typeof(JsonStringLocalizerFactory));
+//    });
 
-builder.Services.AddMvc()
-    .AddDataAnnotationsLocalization(options =>
-    {
-        options.DataAnnotationLocalizerProvider = (type, factory) =>
-            factory.Create(typeof(JsonStringLocalizerFactory));
-    });
+//builder.Services.AddSingleton<TranslationClient>(x =>
+//    TranslationClient.Create(
+//        new TranslationSettings
+//        {
+//            ApiKey = "AIzaSyC69tYuAo11VZ44WcgUE2yefAZ5r3jmZNU",
+//        })) ;
+
+//builder.Services.AddScoped<TranslationService>();
 
 builder.Services.Configure<RequestLocalizationOptions>(options =>
 {

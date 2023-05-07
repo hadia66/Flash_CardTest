@@ -1,14 +1,15 @@
 ﻿{
-  "aaaaaa": "Alaa",
-  "sssssssss": "sara",
-  "hadia5": "hadia",
-  "hjghfh": "hjf",
-  "uiCulture": "لغة واجهة المستخدم",
-  "date": "التاريخ",
-  "currency": "العملة",
-  "numbers": "الأرقام",
-  "create": "إضافة",
-  "save": "حفظ",
-  "name": "الاسم",
-  "required": "حقل مطلوب"
+  "aaaaaa": "الاء",
+  "welcome": "مرحبا",
+  "sssssssss": "سارا",
+  "hadia5": "هديه",
+  "hjghfh": "شوماكان",
+  "uiCulture": "UI Culture",
+  "date": "Date",
+  "currency": "Currency",
+  "numbers": "Numbers",
+  "create": "Create",
+  "save": "Save",
+  "name": "Name",
+  "required": "Required field"
 }

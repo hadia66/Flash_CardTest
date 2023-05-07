@@ -18,7 +18,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AgileObjects.ReadableExpressions" Version="4.0.0" />
     <PackageReference Include="Google.Cloud.Redis.V1" Version="3.1.0" />
+    <PackageReference Include="Google.Cloud.Translation.V2" Version="3.2.0" />
     <PackageReference Include="Google.Protobuf" Version="3.23.0-rc3" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.16" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0-preview.3.23174.2" />
@@ -34,6 +36,7 @@
     <PackageReference Include="ServiceStack.Interfaces" Version="6.8.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
     <PackageReference Include="Swashbuckle.AspNetCore.Filters" Version="6.1.0" />
+    <PackageReference Include="TranslatorWidget" Version="1.0.4" />
   </ItemGroup>
 
 </Project>
