@@ -38,17 +38,35 @@ namespace Flash_Card.Controllers
         //    return Ok(Result);
         //}
 
+        //[HttpGet()]
+        //public async Task<IActionResult> GetData()
+        //{
+        //    var data = await _Categoryservice.GetAllAsync();
+
+        //    var welcomeMessage = new List<string>();
+        //    foreach (var category in data)
+        //    {
+
+        //        welcomeMessage.Add(string.Format(_localization[category.CategoryName.ToString()]));
+        //        welcomeMessage.Add(string.Format(_localization[category.CategoryDescription.ToString()]));
+
+        //    }
+
+        //    return Ok(welcomeMessage);
+        //}
         [HttpGet()]
         public async Task<IActionResult> GetData()
         {
             var data = await _Categoryservice.GetAllAsync();
 
-            var welcomeMessage = new List<string>();
+            var welcomeMessage = new List<CategoryNameDto>();
             foreach (var category in data)
             {
-
-                welcomeMessage.Add(string.Format(_localization[category.CategoryName.ToString()]));
-                welcomeMessage.Add(string.Format(_localization[category.CategoryDescription.ToString()]));
+                var item = new CategoryNameDto();
+                item.CategoryDescription = string.Format(_localization[category.CategoryDescription.ToString()]);
+                item.CategoryName = string.Format(_localization[category.CategoryName.ToString()]);
+                item.CategoryId =category.CategoryId;
+                welcomeMessage.Add(item);
 
             }
 
