@@ -14,38 +14,21 @@ using Google.Cloud.Translation.V2;
 namespace Flash_Card.Controllers
 {
     [Route("api/[controller]")]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [ApiController]
     public class CategoryController : ControllerBase
     {
-        //private readonly ApplicationDbContext _db;
-        //public CategoryController(ApplicationDbContext db)
-        //{
-        //    _db = db;
-        //}
-
-        //[HttpPost]
-        //public  async Task<IActionResult> create([FromForm] CategoryModel model) 
-        //{
-        // Category category=new Category();
-        //    category.CategoryName=model.CategoryName;
-        //    category.CategoryDescription=model.CategoryDescription;
-        //    _db.Categories.Add(category);
-        //    _db.SaveChanges();
-        //    return Ok();
-
-        //}
+      
         private readonly ICategoryService _Categoryservice;
         private readonly IStringLocalizer<CategoryController> _localization;
-        private readonly ITranslationService _Translate;
+ 
 
         public CategoryController(ICategoryService categoryservice,
-            IStringLocalizer<CategoryController> localization,
-            ITranslationService translate)
+            IStringLocalizer<CategoryController> localization)
         {
             _Categoryservice = categoryservice;
             _localization = localization;
-            _Translate = translate;
+      
         }
 
         //[HttpGet()]
@@ -59,13 +42,13 @@ namespace Flash_Card.Controllers
         public async Task<IActionResult> GetData()
         {
             var data = await _Categoryservice.GetAllAsync();
-          
+
             var welcomeMessage = new List<string>();
             foreach (var category in data)
             {
-                //var name = category.CategoryName[0];
-                welcomeMessage.Add(string.Format(_localization[category.CategoryName.ToString()]));
 
+                welcomeMessage.Add(string.Format(_localization[category.CategoryName.ToString()]));
+                welcomeMessage.Add(string.Format(_localization[category.CategoryDescription.ToString()]));
 
             }
 
