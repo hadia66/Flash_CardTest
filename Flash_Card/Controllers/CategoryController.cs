@@ -39,7 +39,7 @@ namespace Flash_Card.Controllers
         private readonly IStringLocalizer<CategoryController> _localization;
         private readonly ITranslationService _Translate;
 
-        public CategoryController(ICategoryService categoryservice, 
+        public CategoryController(ICategoryService categoryservice,
             IStringLocalizer<CategoryController> localization,
             ITranslationService translate)
         {
@@ -48,26 +48,28 @@ namespace Flash_Card.Controllers
             _Translate = translate;
         }
 
+        //[HttpGet()]
+        //public async Task<IActionResult> GetAll()
+        //{
+        //    var Result = await _Categoryservice.GetAllAsync();
+        //    return Ok(Result);
+        //}
+
         [HttpGet()]
-        public async Task<IActionResult> GetAll()
-        {
-            var Result = await _Categoryservice.GetAllAsync();
-            return Ok(Result);
-        }
-       
-        [HttpGet()]
-        public async Task<IActionResult> GetData([FromHeader]string targetLanguageCode)
+        public async Task<IActionResult> GetData()
         {
             var data = await _Categoryservice.GetAllAsync();
-            
-        
-
-            foreach (var item in data)
+          
+            var welcomeMessage = new List<string>();
+            foreach (var category in data)
             {
-                item.CategoryDescription = await _Translate.Translate(item.CategoryDescription, targetLanguageCode);
+                //var name = category.CategoryName[0];
+                welcomeMessage.Add(string.Format(_localization[category.CategoryName.ToString()]));
+
+
             }
 
-            return Ok(data);
+            return Ok(welcomeMessage);
         }
         //[HttpGet()]
         //public async Task<IActionResult> GetAll(string ln)
@@ -79,13 +81,13 @@ namespace Flash_Card.Controllers
         //}
 
 
-        [HttpGet()]
-        public async Task<IActionResult> GetAllProducts()
-        {
-            var Result = await _Categoryservice.GetAllCProducts();
+        //[HttpGet()]
+        //public async Task<IActionResult> GetAllProducts()
+        //{
+        //    var Result = await _Categoryservice.GetAllCProducts();
 
-            return Ok(Result);
-        }
+        //    return Ok(Result);
+        //}
 
 
         //[HttpGet("{id}")]
